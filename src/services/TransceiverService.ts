@@ -1,12 +1,13 @@
 import { BaseService } from './BaseService';
 import { StarlinkClient } from '../client';
 import * as Device from '../types';
-import { create } from '@bufbuild/protobuf';
-import { RequestSchema } from '../../lib/ts/device/device_pb';
 import {
   TransceiverGetStatusRequestSchema,
+  TransceiverGetStatusResponseSchema,
   TransceiverGetTelemetryRequestSchema,
+  TransceiverGetTelemetryResponseSchema,
   TransceiverIFLoopbackTestRequestSchema,
+  TransceiverIFLoopbackTestResponseSchema,
 } from '../../lib/ts/device/transceiver_pb';
 
 /**
@@ -35,21 +36,14 @@ export class TransceiverService extends BaseService {
   async getStatus(
     request?: Device.Transceiver.TransceiverGetStatusRequest
   ): Promise<Device.Transceiver.TransceiverGetStatusResponse> {
-    this.debug('Getting transceiver status', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: {
-        case: 'transceiverGetStatus',
-        value: create(TransceiverGetStatusRequestSchema, request),
-      },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'transceiverGetStatus') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'transceiverGetStatus',
+      TransceiverGetStatusRequestSchema,
+      request,
+      TransceiverGetStatusResponseSchema,
+      'transceiverGetStatus',
+      'Getting transceiver status'
+    );
   }
 
   /**
@@ -64,21 +58,14 @@ export class TransceiverService extends BaseService {
   async getTelemetry(
     request?: Device.Transceiver.TransceiverGetTelemetryRequest
   ): Promise<Device.Transceiver.TransceiverGetTelemetryResponse> {
-    this.debug('Getting transceiver telemetry', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: {
-        case: 'transceiverGetTelemetry',
-        value: create(TransceiverGetTelemetryRequestSchema, request),
-      },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'transceiverGetTelemetry') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'transceiverGetTelemetry',
+      TransceiverGetTelemetryRequestSchema,
+      request,
+      TransceiverGetTelemetryResponseSchema,
+      'transceiverGetTelemetry',
+      'Getting transceiver telemetry'
+    );
   }
 
   /**
@@ -94,20 +81,13 @@ export class TransceiverService extends BaseService {
   async ifLoopbackTest(
     request: Device.Transceiver.TransceiverIFLoopbackTestRequest
   ): Promise<Device.Transceiver.TransceiverIFLoopbackTestResponse> {
-    this.debug('Running IF loopback test', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: {
-        case: 'transceiverIfLoopbackTest',
-        value: create(TransceiverIFLoopbackTestRequestSchema, request),
-      },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'transceiverIfLoopbackTest') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'transceiverIfLoopbackTest',
+      TransceiverIFLoopbackTestRequestSchema,
+      request,
+      TransceiverIFLoopbackTestResponseSchema,
+      'transceiverIfLoopbackTest',
+      'Running IF loopback test'
+    );
   }
 }

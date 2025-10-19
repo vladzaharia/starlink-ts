@@ -7,18 +7,30 @@ import {
   GetStatusRequestSchema,
   DishGetEmcRequestSchema,
   DishSetEmcRequestSchema,
+  DishSetEmcResponseSchema,
+  DishGetEmcResponseSchema,
   DishPowerSaveRequestSchema,
   GetDiagnosticsRequestSchema,
+  DishGetDiagnosticsResponseSchema,
 } from '../../lib/ts/device/device_pb';
 import {
   DishStowRequestSchema,
+  DishStowResponseSchema,
   DishGetContextRequestSchema,
+  DishGetContextResponseSchema,
+  DishGetStatusResponseSchema,
   DishGetObstructionMapRequestSchema,
+  DishGetObstructionMapResponseSchema,
   DishClearObstructionMapRequestSchema,
+  DishClearObstructionMapResponseSchema,
   DishSetConfigRequestSchema,
+  DishSetConfigResponseSchema,
   DishGetConfigRequestSchema,
+  DishGetConfigResponseSchema,
   DishActivateRssiScanRequestSchema,
+  DishActivateRssiScanResponseSchema,
   DishGetRssiScanResultRequestSchema,
+  DishGetRssiScanResultResponseSchema,
 } from '../../lib/ts/device/dish_pb';
 
 /**
@@ -51,18 +63,14 @@ export class DishService extends BaseService {
   async getContext(
     request?: Device.Dish.DishGetContextRequest
   ): Promise<Device.Dish.DishGetContextResponse> {
-    this.debug('Getting dish context', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: { case: 'dishGetContext', value: create(DishGetContextRequestSchema, request) },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'dishGetContext') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'dishGetContext',
+      DishGetContextRequestSchema,
+      request,
+      DishGetContextResponseSchema,
+      'dishGetContext',
+      'Getting dish context'
+    );
   }
 
   /**
@@ -76,18 +84,14 @@ export class DishService extends BaseService {
    * ```
    */
   async getStatus(): Promise<Device.Dish.DishGetStatusResponse> {
-    this.debug('Getting dish status');
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: { case: 'getStatus', value: create(GetStatusRequestSchema) },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'dishGetStatus') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'getStatus',
+      GetStatusRequestSchema,
+      undefined,
+      DishGetStatusResponseSchema,
+      'dishGetStatus',
+      'Getting dish status'
+    );
   }
 
   /**
@@ -99,18 +103,14 @@ export class DishService extends BaseService {
    * ```
    */
   async stow(request?: Device.Dish.DishStowRequest): Promise<Device.Dish.DishStowResponse> {
-    this.debug('Stowing dish', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: { case: 'dishStow', value: create(DishStowRequestSchema, request) },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'dishStow') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'dishStow',
+      DishStowRequestSchema,
+      request,
+      DishStowResponseSchema,
+      'dishStow',
+      'Stowing dish'
+    );
   }
 
   /**
@@ -125,21 +125,14 @@ export class DishService extends BaseService {
   async getObstructionMap(
     request?: Device.Dish.DishGetObstructionMapRequest
   ): Promise<Device.Dish.DishGetObstructionMapResponse> {
-    this.debug('Getting obstruction map', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: {
-        case: 'dishGetObstructionMap',
-        value: create(DishGetObstructionMapRequestSchema, request),
-      },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'dishGetObstructionMap') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'dishGetObstructionMap',
+      DishGetObstructionMapRequestSchema,
+      request,
+      DishGetObstructionMapResponseSchema,
+      'dishGetObstructionMap',
+      'Getting obstruction map'
+    );
   }
 
   /**
@@ -153,21 +146,14 @@ export class DishService extends BaseService {
   async clearObstructionMap(
     request?: Device.Dish.DishClearObstructionMapRequest
   ): Promise<Device.Dish.DishClearObstructionMapResponse> {
-    this.debug('Clearing obstruction map', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: {
-        case: 'dishClearObstructionMap',
-        value: create(DishClearObstructionMapRequestSchema, request),
-      },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'dishClearObstructionMap') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'dishClearObstructionMap',
+      DishClearObstructionMapRequestSchema,
+      request,
+      DishClearObstructionMapResponseSchema,
+      'dishClearObstructionMap',
+      'Clearing obstruction map'
+    );
   }
 
   /**
@@ -182,18 +168,14 @@ export class DishService extends BaseService {
   async getEmc(
     request?: Device.Device.DishGetEmcRequest
   ): Promise<Device.Device.DishGetEmcResponse> {
-    this.debug('Getting EMC settings', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: { case: 'dishGetEmc', value: create(DishGetEmcRequestSchema, request) },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'dishGetEmc') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'dishGetEmc',
+      DishGetEmcRequestSchema,
+      request,
+      DishGetEmcResponseSchema,
+      'dishGetEmc',
+      'Getting EMC settings'
+    );
   }
 
   /**
@@ -207,18 +189,14 @@ export class DishService extends BaseService {
   async setEmc(
     request: Device.Device.DishSetEmcRequest
   ): Promise<Device.Device.DishSetEmcResponse> {
-    this.debug('Setting EMC settings', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: { case: 'dishSetEmc', value: create(DishSetEmcRequestSchema, request) },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'dishSetEmc') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'dishSetEmc',
+      DishSetEmcRequestSchema,
+      request,
+      DishSetEmcResponseSchema,
+      'dishSetEmc',
+      'Setting EMC settings'
+    );
   }
 
   /**
@@ -233,18 +211,14 @@ export class DishService extends BaseService {
   async getConfig(
     request?: Device.Dish.DishGetConfigRequest
   ): Promise<Device.Dish.DishGetConfigResponse> {
-    this.debug('Getting dish config', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: { case: 'dishGetConfig', value: create(DishGetConfigRequestSchema, request) },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'dishGetConfig') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'dishGetConfig',
+      DishGetConfigRequestSchema,
+      request,
+      DishGetConfigResponseSchema,
+      'dishGetConfig',
+      'Getting dish config'
+    );
   }
 
   /**
@@ -258,18 +232,14 @@ export class DishService extends BaseService {
   async setConfig(
     request: Device.Dish.DishSetConfigRequest
   ): Promise<Device.Dish.DishSetConfigResponse> {
-    this.debug('Setting dish config', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: { case: 'dishSetConfig', value: create(DishSetConfigRequestSchema, request) },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'dishSetConfig') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'dishSetConfig',
+      DishSetConfigRequestSchema,
+      request,
+      DishSetConfigResponseSchema,
+      'dishSetConfig',
+      'Setting dish config'
+    );
   }
 
   /**
@@ -307,21 +277,14 @@ export class DishService extends BaseService {
   async activateRssiScan(
     request: Device.Dish.DishActivateRssiScanRequest
   ): Promise<Device.Dish.DishActivateRssiScanResponse> {
-    this.debug('Activating RSSI scan', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: {
-        case: 'dishActivateRssiScan',
-        value: create(DishActivateRssiScanRequestSchema, request),
-      },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'dishActivateRssiScan') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'dishActivateRssiScan',
+      DishActivateRssiScanRequestSchema,
+      request,
+      DishActivateRssiScanResponseSchema,
+      'dishActivateRssiScan',
+      'Activating RSSI scan'
+    );
   }
 
   /**
@@ -336,21 +299,14 @@ export class DishService extends BaseService {
   async getRssiScanResult(
     request?: Device.Dish.DishGetRssiScanResultRequest
   ): Promise<Device.Dish.DishGetRssiScanResultResponse> {
-    this.debug('Getting RSSI scan results', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: {
-        case: 'dishGetRssiScanResult',
-        value: create(DishGetRssiScanResultRequestSchema, request),
-      },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'dishGetRssiScanResult') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'dishGetRssiScanResult',
+      DishGetRssiScanResultRequestSchema,
+      request,
+      DishGetRssiScanResultResponseSchema,
+      'dishGetRssiScanResult',
+      'Getting RSSI scan results'
+    );
   }
 
   /**
@@ -363,17 +319,13 @@ export class DishService extends BaseService {
    * ```
    */
   async getDiagnostics(): Promise<Device.Device.DishGetDiagnosticsResponse> {
-    this.debug('Getting dish diagnostics');
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: { case: 'getDiagnostics', value: create(GetDiagnosticsRequestSchema) },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'dishGetDiagnostics') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'getDiagnostics',
+      GetDiagnosticsRequestSchema,
+      undefined,
+      DishGetDiagnosticsResponseSchema,
+      'dishGetDiagnostics',
+      'Getting dish diagnostics'
+    );
   }
 }

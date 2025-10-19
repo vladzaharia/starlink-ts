@@ -1,19 +1,26 @@
 import { BaseService } from './BaseService';
 import { StarlinkClient } from '../client';
 import * as Device from '../types';
-import { create } from '@bufbuild/protobuf';
 import {
-  RequestSchema,
   GetDeviceInfoRequestSchema,
+  GetDeviceInfoResponseSchema,
   GetStatusRequestSchema,
   RebootRequestSchema,
+  RebootResponseSchema,
   GetLogRequestSchema,
+  GetLogResponseSchema,
   GetLocationRequestSchema,
+  GetLocationResponseSchema,
   SpeedTestRequestSchema,
+  SpeedTestResponseSchema,
   GetPingRequestSchema,
+  GetPingResponseSchema,
   PingHostRequestSchema,
+  PingHostResponseSchema,
   GetConnectionsRequestSchema,
+  GetConnectionsResponseSchema,
 } from '../../lib/ts/device/device_pb';
+import { DishGetStatusResponseSchema } from '../../lib/ts/device/dish_pb';
 
 /**
  * Device service for general device operations
@@ -44,18 +51,14 @@ export class DeviceService extends BaseService {
   async getInfo(
     request?: Device.Device.GetDeviceInfoRequest
   ): Promise<Device.Device.GetDeviceInfoResponse> {
-    this.debug('Getting device info', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: { case: 'getDeviceInfo', value: create(GetDeviceInfoRequestSchema, request) },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'getDeviceInfo') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'getDeviceInfo',
+      GetDeviceInfoRequestSchema,
+      request,
+      GetDeviceInfoResponseSchema,
+      'getDeviceInfo',
+      'Getting device info'
+    );
   }
 
   /**
@@ -70,18 +73,14 @@ export class DeviceService extends BaseService {
   async getStatus(
     request?: Device.Device.GetStatusRequest
   ): Promise<Device.Dish.DishGetStatusResponse> {
-    this.debug('Getting device status', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: { case: 'getStatus', value: create(GetStatusRequestSchema, request) },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'dishGetStatus') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'getStatus',
+      GetStatusRequestSchema,
+      request,
+      DishGetStatusResponseSchema,
+      'dishGetStatus',
+      'Getting device status'
+    );
   }
 
   /**
@@ -93,18 +92,14 @@ export class DeviceService extends BaseService {
    * ```
    */
   async reboot(request?: Device.Device.RebootRequest): Promise<Device.Device.RebootResponse> {
-    this.debug('Rebooting device', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: { case: 'reboot', value: create(RebootRequestSchema, request) },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'reboot') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'reboot',
+      RebootRequestSchema,
+      request,
+      RebootResponseSchema,
+      'reboot',
+      'Rebooting device'
+    );
   }
 
   /**
@@ -117,18 +112,14 @@ export class DeviceService extends BaseService {
    * ```
    */
   async getLogs(request?: Device.Device.GetLogRequest): Promise<Device.Device.GetLogResponse> {
-    this.debug('Getting device logs', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: { case: 'getLog', value: create(GetLogRequestSchema, request) },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'getLog') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'getLog',
+      GetLogRequestSchema,
+      request,
+      GetLogResponseSchema,
+      'getLog',
+      'Getting device logs'
+    );
   }
 
   /**
@@ -144,18 +135,14 @@ export class DeviceService extends BaseService {
   async getLocation(
     request?: Device.Device.GetLocationRequest
   ): Promise<Device.Device.GetLocationResponse> {
-    this.debug('Getting device location', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: { case: 'getLocation', value: create(GetLocationRequestSchema, request) },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'getLocation') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'getLocation',
+      GetLocationRequestSchema,
+      request,
+      GetLocationResponseSchema,
+      'getLocation',
+      'Getting device location'
+    );
   }
 
   /**
@@ -171,18 +158,14 @@ export class DeviceService extends BaseService {
   async speedTest(
     request?: Device.Device.SpeedTestRequest
   ): Promise<Device.Device.SpeedTestResponse> {
-    this.debug('Running speed test', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: { case: 'speedTest', value: create(SpeedTestRequestSchema, request) },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'speedTest') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'speedTest',
+      SpeedTestRequestSchema,
+      request,
+      SpeedTestResponseSchema,
+      'speedTest',
+      'Running speed test'
+    );
   }
 
   /**
@@ -195,18 +178,14 @@ export class DeviceService extends BaseService {
    * ```
    */
   async getPing(request?: Device.Device.GetPingRequest): Promise<Device.Device.GetPingResponse> {
-    this.debug('Getting ping statistics', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: { case: 'getPing', value: create(GetPingRequestSchema, request) },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'getPing') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'getPing',
+      GetPingRequestSchema,
+      request,
+      GetPingResponseSchema,
+      'getPing',
+      'Getting ping statistics'
+    );
   }
 
   /**
@@ -219,18 +198,14 @@ export class DeviceService extends BaseService {
    * ```
    */
   async pingHost(request: Device.Device.PingHostRequest): Promise<Device.Device.PingHostResponse> {
-    this.debug('Pinging host', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: { case: 'pingHost', value: create(PingHostRequestSchema, request) },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'pingHost') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'pingHost',
+      PingHostRequestSchema,
+      request,
+      PingHostResponseSchema,
+      'pingHost',
+      'Pinging host'
+    );
   }
 
   /**
@@ -245,17 +220,13 @@ export class DeviceService extends BaseService {
   async getNetworkInterfaces(
     request: Device.Device.GetConnectionsRequest
   ): Promise<Device.Device.GetConnectionsResponse> {
-    this.debug('Getting network interfaces', request);
-    const req = create(RequestSchema, {
-      id: 0n,
-      epochId: 0n,
-      targetId: '',
-      request: { case: 'getConnections', value: create(GetConnectionsRequestSchema, request) },
-    });
-    const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'getConnections') {
-      return response.response.value;
-    }
-    throw new Error(`Unexpected response type: ${response.response.case}`);
+    return this.call(
+      'getConnections',
+      GetConnectionsRequestSchema,
+      request,
+      GetConnectionsResponseSchema,
+      'getConnections',
+      'Getting network interfaces'
+    );
   }
 }
