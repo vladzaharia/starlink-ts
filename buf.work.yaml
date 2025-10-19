@@ -1,0 +1,4 @@
+version: v1
+directories:
+  - spacex_api
+

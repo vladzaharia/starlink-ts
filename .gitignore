@@ -140,3 +140,7 @@ vite.config.ts.timestamp-*
 
 # Generated proto files
 generated/
+
+# Extra Markdown files
+*.md
+!README.md

@@ -24,6 +24,10 @@ export default [
         module: 'readonly',
         require: 'readonly',
         exports: 'readonly',
+        setTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearTimeout: 'readonly',
+        clearInterval: 'readonly',
       },
     },
     plugins: {
@@ -35,7 +39,7 @@ export default [
       ...prettierConfig.rules,
       'prettier/prettier': 'error',
       '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-unused-vars': [
         'error',
         { argsIgnorePattern: '^_' },
@@ -51,6 +55,17 @@ export default [
     },
   },
   {
-    ignores: ['node_modules/**', 'dist/**', 'generated/**'],
+    files: ['tests/**/*.ts', 'vitest.config.ts'],
+    languageOptions: {
+      parserOptions: {
+        project: null,
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'error',
+    },
+  },
+  {
+    ignores: ['node_modules/**', 'dist/**', 'generated/**', 'examples/**'],
   },
 ];

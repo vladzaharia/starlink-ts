@@ -21,31 +21,45 @@
     "build": "tsc",
     "clean": "rm -rf dist generated",
     "generate": "yarn generate:proto",
-    "generate:proto": "mkdir -p generated && protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./generated --ts_proto_opt=outputServices=grpc-js,env=node,esModuleInterop=true ./proto/*.proto",
-    "prebuild": "yarn generate",
+    "generate:proto": "buf generate --path spacex_api",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write \"**/*.{ts,json,md}\"",
-    "format:check": "prettier --check \"**/*.{ts,json,md}\""
+    "format:check": "prettier --check \"**/*.{ts,json,md}\"",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "example:basic": "ts-node examples/basic-usage.ts",
+    "example:device-info": "ts-node examples/device-info.ts",
+    "example:dish-status": "ts-node examples/dish-status.ts",
+    "example:wifi-clients": "ts-node examples/wifi-clients.ts",
+    "example:error-handling": "ts-node examples/error-handling.ts",
+    "example:retry-logic": "ts-node examples/retry-logic.ts",
+    "example:cli": "ts-node examples/cli.ts",
+    "example:cli:help": "ts-node examples/cli.ts help"
   },
   "engines": {
     "node": ">=18.0.0"
   },
   "dependencies": {
     "@bufbuild/protobuf": "^2.9.0",
-    "@grpc/grpc-js": "^1.14.0",
-    "@grpc/proto-loader": "^0.8.0"
+    "@grpc/grpc-js": "^1.14.0"
   },
   "devDependencies": {
-    "@types/google-protobuf": "^3.15.12",
+    "@bufbuild/buf": "^1.58.0",
+    "@bufbuild/protoc-gen-es": "^2.0.0",
+    "@eslint/js": "^9.38.0",
+    "@types/node": "^20.14.0",
     "@typescript-eslint/eslint-plugin": "^8.46.1",
     "@typescript-eslint/parser": "^8.46.1",
+    "@vitest/ui": "^2.0.0",
     "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "prettier": "^3.6.2",
-    "protobufjs": "^7.5.4",
-    "ts-proto": "^2.7.7",
-    "typescript": "5.9.3"
+    "ts-node": "^10.9.2",
+    "typescript": "5.9.3",
+    "typescript-eslint": "^8.46.1",
+    "vitest": "^2.0.0"
   }
 }
