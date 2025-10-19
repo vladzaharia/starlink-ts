@@ -2,7 +2,7 @@ version: v1
 
 plugins:
   - plugin: buf.build/bufbuild/es:v2.0.0
-    out: generated
+    out: lib/ts
     opt:
       - target=ts
 

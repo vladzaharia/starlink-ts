@@ -30,6 +30,6 @@
     "useDefineForClassFields": true,
     "useUnknownInCatchVariables": true
   },
-  "include": ["src/**/*", "generated/**/*"],
+  "include": ["src/**/*", "lib/ts/**/*"],
   "exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.test.ts", "tests/**/*"]
 }

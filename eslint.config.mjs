@@ -47,7 +47,7 @@ export default [
     },
   },
   {
-    files: ['generated/**/*.ts'],
+    files: ['lib/ts/**/*.ts'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
@@ -66,6 +66,6 @@ export default [
     },
   },
   {
-    ignores: ['node_modules/**', 'dist/**', 'generated/**', 'examples/**'],
+    ignores: ['node_modules/**', 'dist/**', 'examples/**'],
   },
 ];

@@ -19,9 +19,9 @@
   ],
   "scripts": {
     "build": "tsc",
-    "clean": "rm -rf dist generated",
+    "clean": "rm -rf dist",
     "generate": "yarn generate:proto",
-    "generate:proto": "buf generate --path spacex_api",
+    "generate:proto": "buf generate --path lib/proto",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write \"**/*.{ts,json,md}\"",
