@@ -1,6 +1,7 @@
 import { StarlinkClient } from '../client';
 import { NormalizedClientConfig } from '../types/ClientConfig';
-import { Channel } from '@grpc/grpc-js';
+import { Device } from '../../lib/ts/device/device_pb';
+import { createClient } from '@connectrpc/connect';
 
 /**
  * Base class for all service implementations
@@ -10,17 +11,12 @@ import { Channel } from '@grpc/grpc-js';
 export abstract class BaseService {
   protected client: StarlinkClient;
   protected config: NormalizedClientConfig;
+  protected grpcClient: ReturnType<typeof createClient<typeof Device>>;
 
   constructor(client: StarlinkClient) {
     this.client = client;
     this.config = client.getConfig();
-  }
-
-  /**
-   * Get the underlying gRPC channel
-   */
-  protected getChannel(): Channel {
-    return this.client.getGrpcChannel();
+    this.grpcClient = client.getGrpcClient();
   }
 
   /**

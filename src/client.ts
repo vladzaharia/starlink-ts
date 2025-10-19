@@ -1,4 +1,5 @@
-import { Channel } from '@grpc/grpc-js';
+import { createClient, Transport } from '@connectrpc/connect';
+import { createGrpcTransport } from '@connectrpc/connect-node';
 import {
   StarlinkClientConfig,
   NormalizedClientConfig,
@@ -6,6 +7,7 @@ import {
 } from './types/ClientConfig';
 import { ConnectionError } from './errors/StarlinkError';
 import { DeviceService, DishService, WifiService, TransceiverService } from './services';
+import { Device } from '../lib/ts/device/device_pb';
 
 /**
  * Main Starlink client for communicating with Starlink dishes
@@ -26,7 +28,8 @@ import { DeviceService, DishService, WifiService, TransceiverService } from './s
  */
 export class StarlinkClient {
   private config: NormalizedClientConfig;
-  private channel: Channel | null = null;
+  private transport: Transport;
+  private grpcClient: ReturnType<typeof createClient<typeof Device>>;
   private isConnected = false;
 
   // Service instances
@@ -38,7 +41,18 @@ export class StarlinkClient {
   constructor(config: StarlinkClientConfig) {
     this.config = normalizeConfig(config);
 
-    // Initialize services
+    // Create gRPC transport (gRPC protocol requires HTTP/2)
+    // Note: Starlink devices use gRPC protocol
+    this.transport = createGrpcTransport({
+      baseUrl: `http://${this.config.address}`,
+      // gRPC transport always uses HTTP/2
+      useBinaryFormat: true,
+    });
+
+    // Create the gRPC client for the Device service
+    this.grpcClient = createClient(Device, this.transport);
+
+    // Initialize services with the gRPC client
     this.device = new DeviceService(this);
     this.dish = new DishService(this);
     this.wifi = new WifiService(this);
@@ -46,62 +60,42 @@ export class StarlinkClient {
   }
 
   /**
-   * Get the gRPC channel, creating it if necessary
+   * Get the Connect gRPC client
+   * @internal
    */
-  private getChannel(): Channel {
-    if (!this.channel) {
-      this.channel = new Channel(this.config.address, this.config.credentials, {});
-      this.isConnected = true;
-    }
-    return this.channel;
+  public getGrpcClient(): ReturnType<typeof createClient<typeof Device>> {
+    return this.grpcClient;
   }
 
   /**
    * Check if the client is connected
    */
   public isReady(): boolean {
-    return this.isConnected && this.channel !== null;
+    return this.isConnected;
   }
 
   /**
    * Wait for the channel to be ready
    */
   public async waitForReady(_timeout?: number): Promise<void> {
-    // Ensure channel is created
-    this.getChannel();
-
-    return new Promise((resolve) => {
-      try {
-        // Attempt to connect by making a simple call
-        // In a real implementation, this would use the actual gRPC service
-        this.isConnected = true;
-        resolve();
-      } catch (error) {
-        this.isConnected = false;
-        throw new ConnectionError(
-          `Failed to connect to ${this.config.address}: ${error instanceof Error ? error.message : String(error)}`
-        );
-      }
-    });
+    try {
+      // Test connection by making a simple request
+      // We'll just mark as connected for now - actual connection test happens on first request
+      this.isConnected = true;
+    } catch (error) {
+      this.isConnected = false;
+      throw new ConnectionError(
+        `Failed to connect to ${this.config.address}: ${error instanceof Error ? error.message : String(error)}`
+      );
+    }
   }
 
   /**
    * Close the client connection
    */
   public async close(): Promise<void> {
-    if (this.channel) {
-      this.channel.close();
-      this.channel = null;
-      this.isConnected = false;
-    }
-  }
-
-  /**
-   * Get the underlying gRPC channel
-   * @internal
-   */
-  public getGrpcChannel(): Channel {
-    return this.getChannel();
+    this.isConnected = false;
+    // Connect transport doesn't need explicit cleanup
   }
 
   /**

@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { createStarlinkClient, StarlinkClient } from '../../src/client';
 import { DishService } from '../../src/services/DishService';
+import { mockGrpcHandle } from '../helpers/mockGrpcClient';
 
 describe('DishService', () => {
   let client: StarlinkClient;
@@ -14,6 +15,7 @@ describe('DishService', () => {
   });
 
   afterEach(async () => {
+    vi.restoreAllMocks();
     if (client) {
       await client.close().catch(() => {
         // Ignore errors during cleanup
@@ -41,17 +43,20 @@ describe('DishService', () => {
 
   describe('getContext', () => {
     it('should be callable', async () => {
+      mockGrpcHandle(client, 'dishGetContext', {});
       const result = await service.getContext({});
       expect(result).toBeDefined();
     });
 
     it('should return object', async () => {
+      mockGrpcHandle(client, 'dishGetContext', {});
       const result = await service.getContext({});
       expect(typeof result).toBe('object');
     });
 
     it('should call debug', async () => {
       const debugClient = createStarlinkClient({ debug: true });
+      mockGrpcHandle(debugClient, 'dishGetContext', {});
       const debugSpy = vi.spyOn(console, 'debug').mockImplementation(() => {});
 
       await debugClient.dish.getContext({});
@@ -70,17 +75,20 @@ describe('DishService', () => {
 
   describe('getStatus', () => {
     it('should be callable', async () => {
+      mockGrpcHandle(client, 'dishGetStatus', {});
       const result = await service.getStatus({});
       expect(result).toBeDefined();
     });
 
     it('should return object', async () => {
+      mockGrpcHandle(client, 'dishGetStatus', {});
       const result = await service.getStatus({});
       expect(typeof result).toBe('object');
     });
 
     it('should call debug', async () => {
       const debugClient = createStarlinkClient({ debug: true });
+      mockGrpcHandle(debugClient, 'dishGetStatus', {});
       const debugSpy = vi.spyOn(console, 'debug').mockImplementation(() => {});
 
       await debugClient.dish.getStatus({});
