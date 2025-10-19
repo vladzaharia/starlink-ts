@@ -1,0 +1,51 @@
+{
+  "name": "starlink-ts",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for communicating with Starlink satellite dish via gRPC",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "repository": "https://github.com/vladzaharia/starlink-ts",
+  "author": "Vlad Zaharia",
+  "license": "MIT",
+  "keywords": [
+    "starlink",
+    "grpc",
+    "typescript",
+    "sdk"
+  ],
+  "files": [
+    "dist",
+    "proto"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist generated",
+    "generate": "yarn generate:proto",
+    "generate:proto": "mkdir -p generated && protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./generated --ts_proto_opt=outputServices=grpc-js,env=node,esModuleInterop=true ./proto/*.proto",
+    "prebuild": "yarn generate",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write \"**/*.{ts,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,json,md}\""
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "^2.9.0",
+    "@grpc/grpc-js": "^1.14.0",
+    "@grpc/proto-loader": "^0.8.0"
+  },
+  "devDependencies": {
+    "@types/google-protobuf": "^3.15.12",
+    "@typescript-eslint/eslint-plugin": "^8.46.1",
+    "@typescript-eslint/parser": "^8.46.1",
+    "eslint": "^9.38.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "^3.6.2",
+    "protobufjs": "^7.5.4",
+    "ts-proto": "^2.7.7",
+    "typescript": "5.9.3"
+  }
+}
