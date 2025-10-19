@@ -45,4 +45,3 @@ async function getDeviceInfo() {
 
 // Run the example
 getDeviceInfo();
-

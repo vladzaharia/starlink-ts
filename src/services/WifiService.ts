@@ -41,7 +41,9 @@ export class WifiService extends BaseService {
    * console.log('Connected clients:', clients);
    * ```
    */
-  async getClients(request?: Device.WiFi.WifiGetClientsRequest): Promise<Device.WiFi.WifiGetClientsResponse> {
+  async getClients(
+    request?: Device.WiFi.WifiGetClientsRequest
+  ): Promise<Device.WiFi.WifiGetClientsResponse> {
     this.debug('Getting WiFi clients', request);
     const req = create(RequestSchema, {
       id: 0n,
@@ -65,7 +67,9 @@ export class WifiService extends BaseService {
    * console.log('WiFi Config:', config);
    * ```
    */
-  async getConfig(request?: Device.WiFi.WifiGetConfigRequest): Promise<Device.WiFi.WifiGetConfigResponse> {
+  async getConfig(
+    request?: Device.WiFi.WifiGetConfigRequest
+  ): Promise<Device.WiFi.WifiGetConfigResponse> {
     this.debug('Getting WiFi config', request);
     const req = create(RequestSchema, {
       id: 0n,
@@ -88,7 +92,9 @@ export class WifiService extends BaseService {
    * await client.wifi.setConfig({ config: {...} });
    * ```
    */
-  async setConfig(request: Device.WiFi.WifiSetConfigRequest): Promise<Device.WiFi.WifiSetConfigResponse> {
+  async setConfig(
+    request: Device.WiFi.WifiSetConfigRequest
+  ): Promise<Device.WiFi.WifiSetConfigResponse> {
     this.debug('Setting WiFi config', request);
     const req = create(RequestSchema, {
       id: 0n,
@@ -159,13 +165,18 @@ export class WifiService extends BaseService {
    * console.log('Ping Metrics:', metrics);
    * ```
    */
-  async getPingMetrics(request?: Device.WiFi.WifiGetPingMetricsRequest): Promise<Device.WiFi.WifiGetPingMetricsResponse> {
+  async getPingMetrics(
+    request?: Device.WiFi.WifiGetPingMetricsRequest
+  ): Promise<Device.WiFi.WifiGetPingMetricsResponse> {
     this.debug('Getting ping metrics', request);
     const req = create(RequestSchema, {
       id: 0n,
       epochId: 0n,
       targetId: '',
-      request: { case: 'wifiGetPingMetrics', value: create(WifiGetPingMetricsRequestSchema, request) },
+      request: {
+        case: 'wifiGetPingMetrics',
+        value: create(WifiGetPingMetricsRequestSchema, request),
+      },
     });
     const response = await this.grpcClient.handle(req);
     if (response.response.case === 'wifiGetPingMetrics') {
@@ -183,13 +194,18 @@ export class WifiService extends BaseService {
    * console.log('Client History:', history);
    * ```
    */
-  async getClientHistory(request?: Device.WiFi.WifiGetClientHistoryRequest): Promise<Device.WiFi.WifiGetClientHistoryResponse> {
+  async getClientHistory(
+    request?: Device.WiFi.WifiGetClientHistoryRequest
+  ): Promise<Device.WiFi.WifiGetClientHistoryResponse> {
     this.debug('Getting client history', request);
     const req = create(RequestSchema, {
       id: 0n,
       epochId: 0n,
       targetId: '',
-      request: { case: 'wifiGetClientHistory', value: create(WifiGetClientHistoryRequestSchema, request) },
+      request: {
+        case: 'wifiGetClientHistory',
+        value: create(WifiGetClientHistoryRequestSchema, request),
+      },
     });
     const response = await this.grpcClient.handle(req);
     if (response.response.case === 'wifiGetClientHistory') {
@@ -212,7 +228,10 @@ export class WifiService extends BaseService {
       id: 0n,
       epochId: 0n,
       targetId: '',
-      request: { case: 'wifiSetClientGivenName', value: create(WifiSetClientGivenNameRequestSchema, request) },
+      request: {
+        case: 'wifiSetClientGivenName',
+        value: create(WifiSetClientGivenNameRequestSchema, request),
+      },
     });
     await this.grpcClient.handle(req);
   }
@@ -226,7 +245,9 @@ export class WifiService extends BaseService {
    * console.log('Diagnostics:', diag);
    * ```
    */
-  async getDiagnostics(request?: Device.WiFi.WifiSelfTestRequest): Promise<Device.WiFi.WifiSelfTestResponse> {
+  async getDiagnostics(
+    request?: Device.WiFi.WifiSelfTestRequest
+  ): Promise<Device.WiFi.WifiSelfTestResponse> {
     this.debug('Getting WiFi diagnostics', request);
     const req = create(RequestSchema, {
       id: 0n,
@@ -250,7 +271,9 @@ export class WifiService extends BaseService {
    * console.log('Test passed:', result.passed);
    * ```
    */
-  async runSelfTest(request: Device.WiFi.WifiRunSelfTestRequest): Promise<Device.WiFi.WifiSelfTestResponse> {
+  async runSelfTest(
+    request: Device.WiFi.WifiRunSelfTestRequest
+  ): Promise<Device.WiFi.WifiSelfTestResponse> {
     this.debug('Running WiFi self test', request);
     const req = create(RequestSchema, {
       id: 0n,
@@ -274,7 +297,9 @@ export class WifiService extends BaseService {
    * console.log('Firewall:', firewall);
    * ```
    */
-  async getFirewall(request: Device.WiFi.WifiGetFirewallRequest): Promise<Device.WiFi.WifiGetFirewallResponse> {
+  async getFirewall(
+    request: Device.WiFi.WifiGetFirewallRequest
+  ): Promise<Device.WiFi.WifiGetFirewallResponse> {
     this.debug('Getting firewall settings', request);
     const req = create(RequestSchema, {
       id: 0n,
@@ -298,7 +323,9 @@ export class WifiService extends BaseService {
    * console.log('Guest Info:', guest);
    * ```
    */
-  async getGuestInfo(request: Device.WiFi.WifiGuestInfoRequest): Promise<Device.WiFi.WifiGuestInfoResponse> {
+  async getGuestInfo(
+    request: Device.WiFi.WifiGuestInfoRequest
+  ): Promise<Device.WiFi.WifiGuestInfoResponse> {
     this.debug('Getting guest info', request);
     const req = create(RequestSchema, {
       id: 0n,

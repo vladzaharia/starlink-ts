@@ -41,7 +41,9 @@ export class DeviceService extends BaseService {
    * console.log('Hardware Version:', info.hardwareVersion);
    * ```
    */
-  async getInfo(request?: Device.Device.GetDeviceInfoRequest): Promise<Device.Device.GetDeviceInfoResponse> {
+  async getInfo(
+    request?: Device.Device.GetDeviceInfoRequest
+  ): Promise<Device.Device.GetDeviceInfoResponse> {
     this.debug('Getting device info', request);
     const req = create(RequestSchema, {
       id: 0n,
@@ -65,7 +67,9 @@ export class DeviceService extends BaseService {
    * console.log('Uptime:', status.uptimeS);
    * ```
    */
-  async getStatus(request?: Device.Device.GetStatusRequest): Promise<Device.Device.GetDeviceInfoResponse> {
+  async getStatus(
+    request?: Device.Device.GetStatusRequest
+  ): Promise<Device.Dish.DishGetStatusResponse> {
     this.debug('Getting device status', request);
     const req = create(RequestSchema, {
       id: 0n,
@@ -74,7 +78,7 @@ export class DeviceService extends BaseService {
       request: { case: 'getStatus', value: create(GetStatusRequestSchema, request) },
     });
     const response = await this.grpcClient.handle(req);
-    if (response.response.case === 'getDeviceInfo') {
+    if (response.response.case === 'dishGetStatus') {
       return response.response.value;
     }
     throw new Error(`Unexpected response type: ${response.response.case}`);
@@ -137,7 +141,9 @@ export class DeviceService extends BaseService {
    * console.log('Longitude:', location.longitude);
    * ```
    */
-  async getLocation(request?: Device.Device.GetLocationRequest): Promise<Device.Device.GetLocationResponse> {
+  async getLocation(
+    request?: Device.Device.GetLocationRequest
+  ): Promise<Device.Device.GetLocationResponse> {
     this.debug('Getting device location', request);
     const req = create(RequestSchema, {
       id: 0n,
@@ -162,7 +168,9 @@ export class DeviceService extends BaseService {
    * console.log('Upload:', result.uploadMbps);
    * ```
    */
-  async speedTest(request?: Device.Device.SpeedTestRequest): Promise<Device.Device.SpeedTestResponse> {
+  async speedTest(
+    request?: Device.Device.SpeedTestRequest
+  ): Promise<Device.Device.SpeedTestResponse> {
     this.debug('Running speed test', request);
     const req = create(RequestSchema, {
       id: 0n,
@@ -234,7 +242,9 @@ export class DeviceService extends BaseService {
    * console.log('Interfaces:', interfaces);
    * ```
    */
-  async getNetworkInterfaces(request: Device.Device.GetConnectionsRequest): Promise<Device.Device.GetConnectionsResponse> {
+  async getNetworkInterfaces(
+    request: Device.Device.GetConnectionsRequest
+  ): Promise<Device.Device.GetConnectionsResponse> {
     this.debug('Getting network interfaces', request);
     const req = create(RequestSchema, {
       id: 0n,

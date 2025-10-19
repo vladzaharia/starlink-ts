@@ -32,13 +32,18 @@ export class TransceiverService extends BaseService {
    * console.log('Demodulator State:', status.demodState);
    * ```
    */
-  async getStatus(request?: Device.Transceiver.TransceiverGetStatusRequest): Promise<Device.Transceiver.TransceiverGetStatusResponse> {
+  async getStatus(
+    request?: Device.Transceiver.TransceiverGetStatusRequest
+  ): Promise<Device.Transceiver.TransceiverGetStatusResponse> {
     this.debug('Getting transceiver status', request);
     const req = create(RequestSchema, {
       id: 0n,
       epochId: 0n,
       targetId: '',
-      request: { case: 'transceiverGetStatus', value: create(TransceiverGetStatusRequestSchema, request) },
+      request: {
+        case: 'transceiverGetStatus',
+        value: create(TransceiverGetStatusRequestSchema, request),
+      },
     });
     const response = await this.grpcClient.handle(req);
     if (response.response.case === 'transceiverGetStatus') {
@@ -56,13 +61,18 @@ export class TransceiverService extends BaseService {
    * console.log('Telemetry:', telemetry);
    * ```
    */
-  async getTelemetry(request?: Device.Transceiver.TransceiverGetTelemetryRequest): Promise<Device.Transceiver.TransceiverGetTelemetryResponse> {
+  async getTelemetry(
+    request?: Device.Transceiver.TransceiverGetTelemetryRequest
+  ): Promise<Device.Transceiver.TransceiverGetTelemetryResponse> {
     this.debug('Getting transceiver telemetry', request);
     const req = create(RequestSchema, {
       id: 0n,
       epochId: 0n,
       targetId: '',
-      request: { case: 'transceiverGetTelemetry', value: create(TransceiverGetTelemetryRequestSchema, request) },
+      request: {
+        case: 'transceiverGetTelemetry',
+        value: create(TransceiverGetTelemetryRequestSchema, request),
+      },
     });
     const response = await this.grpcClient.handle(req);
     if (response.response.case === 'transceiverGetTelemetry') {
@@ -81,13 +91,18 @@ export class TransceiverService extends BaseService {
    * console.log('SNR:', result.snrLoopbackTest);
    * ```
    */
-  async ifLoopbackTest(request: Device.Transceiver.TransceiverIFLoopbackTestRequest): Promise<Device.Transceiver.TransceiverIFLoopbackTestResponse> {
+  async ifLoopbackTest(
+    request: Device.Transceiver.TransceiverIFLoopbackTestRequest
+  ): Promise<Device.Transceiver.TransceiverIFLoopbackTestResponse> {
     this.debug('Running IF loopback test', request);
     const req = create(RequestSchema, {
       id: 0n,
       epochId: 0n,
       targetId: '',
-      request: { case: 'transceiverIfLoopbackTest', value: create(TransceiverIFLoopbackTestRequestSchema, request) },
+      request: {
+        case: 'transceiverIfLoopbackTest',
+        value: create(TransceiverIFLoopbackTestRequestSchema, request),
+      },
     });
     const response = await this.grpcClient.handle(req);
     if (response.response.case === 'transceiverIfLoopbackTest') {

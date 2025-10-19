@@ -44,4 +44,3 @@ async function monitorDishStatus() {
 
 // Run the example
 monitorDishStatus();
-

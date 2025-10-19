@@ -19,6 +19,7 @@ yarn example:basic
 ```
 
 This example shows:
+
 - Creating a client
 - Getting device information
 - Getting device status
@@ -34,6 +35,7 @@ yarn example:device-info
 ```
 
 This example demonstrates:
+
 - Getting device information
 - Getting device status
 - Getting device location
@@ -47,6 +49,7 @@ yarn example:dish-status
 ```
 
 This example shows:
+
 - Getting dish status
 - Getting dish context (satellite information)
 - Getting dish configuration
@@ -60,6 +63,7 @@ yarn example:wifi-clients
 ```
 
 This example demonstrates:
+
 - Getting WiFi status
 - Getting connected clients
 - Getting WiFi configuration
@@ -74,6 +78,7 @@ yarn example:error-handling
 ```
 
 This example shows:
+
 - Connection error handling
 - Timeout error handling
 - Generic error handling with proper error type checking
@@ -88,6 +93,7 @@ yarn example:retry-logic
 ```
 
 This example demonstrates:
+
 - Using `retryWithBackoff()` for automatic retries with exponential backoff
 - Using `withTimeout()` to add timeouts to requests
 - Combining retry and timeout for robust error handling
@@ -103,31 +109,37 @@ yarn example:cli help
 #### CLI Commands
 
 Get device information:
+
 ```bash
 yarn example:cli device-info
 ```
 
 Get device status:
+
 ```bash
 yarn example:cli device-status
 ```
 
 Get dish status:
+
 ```bash
 yarn example:cli dish-status
 ```
 
 Get WiFi status:
+
 ```bash
 yarn example:cli wifi-status
 ```
 
 List connected WiFi clients:
+
 ```bash
 yarn example:cli wifi-clients
 ```
 
 Get device location:
+
 ```bash
 yarn example:cli location
 ```
@@ -237,6 +249,7 @@ The client provides access to four main service modules:
 ### Device Service (`client.device`)
 
 General device operations:
+
 - `getInfo()` - Device information
 - `getStatus()` - Device status
 - `getLocation()` - Device location
@@ -249,6 +262,7 @@ General device operations:
 ### Dish Service (`client.dish`)
 
 Satellite dish operations:
+
 - `getStatus()` - Dish status
 - `getContext()` - Satellite information
 - `getConfig()` - Dish configuration
@@ -258,6 +272,7 @@ Satellite dish operations:
 ### WiFi Service (`client.wifi`)
 
 Router operations:
+
 - `getStatus()` - WiFi status
 - `getClients()` - Connected clients
 - `getConfig()` - WiFi configuration
@@ -267,6 +282,7 @@ Router operations:
 ### Transceiver Service (`client.transceiver`)
 
 RF transceiver operations:
+
 - `getStatus()` - Transceiver status
 - `getTelemetry()` - Transceiver telemetry
 
@@ -284,6 +300,7 @@ RF transceiver operations:
 ### Connection Refused
 
 If you get a connection error, verify:
+
 - The Starlink dish is powered on and accessible
 - The address is correct (default: `192.168.100.1:9200`)
 - Your device is connected to the Starlink network
@@ -292,6 +309,7 @@ If you get a connection error, verify:
 ### Timeout Errors
 
 If requests are timing out:
+
 - Increase the `requestTimeout` in client config
 - Check network connectivity
 - Try with `--debug` flag to see what's happening
@@ -299,6 +317,7 @@ If requests are timing out:
 ### Module Not Found
 
 If you get module errors:
+
 - Run `yarn install` to install dependencies
 - Run `yarn build` to compile TypeScript
 - Ensure you're running examples with `ts-node` or after building
@@ -306,6 +325,7 @@ If you get module errors:
 ## Contributing
 
 To add new examples:
+
 1. Create a new `.ts` file in the `examples/` directory
 2. Add a corresponding npm script in `package.json`
 3. Update this README with documentation
@@ -314,4 +334,3 @@ To add new examples:
 ## License
 
 MIT
-

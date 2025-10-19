@@ -48,7 +48,9 @@ export class DishService extends BaseService {
    * console.log('Obstruction:', context.obstructionFraction);
    * ```
    */
-  async getContext(request?: Device.Dish.DishGetContextRequest): Promise<Device.Dish.DishGetContextResponse> {
+  async getContext(
+    request?: Device.Dish.DishGetContextRequest
+  ): Promise<Device.Dish.DishGetContextResponse> {
     this.debug('Getting dish context', request);
     const req = create(RequestSchema, {
       id: 0n,
@@ -120,13 +122,18 @@ export class DishService extends BaseService {
    * console.log('Obstruction data:', map.snr);
    * ```
    */
-  async getObstructionMap(request?: Device.Dish.DishGetObstructionMapRequest): Promise<Device.Dish.DishGetObstructionMapResponse> {
+  async getObstructionMap(
+    request?: Device.Dish.DishGetObstructionMapRequest
+  ): Promise<Device.Dish.DishGetObstructionMapResponse> {
     this.debug('Getting obstruction map', request);
     const req = create(RequestSchema, {
       id: 0n,
       epochId: 0n,
       targetId: '',
-      request: { case: 'dishGetObstructionMap', value: create(DishGetObstructionMapRequestSchema, request) },
+      request: {
+        case: 'dishGetObstructionMap',
+        value: create(DishGetObstructionMapRequestSchema, request),
+      },
     });
     const response = await this.grpcClient.handle(req);
     if (response.response.case === 'dishGetObstructionMap') {
@@ -143,13 +150,18 @@ export class DishService extends BaseService {
    * await client.dish.clearObstructionMap({});
    * ```
    */
-  async clearObstructionMap(request?: Device.Dish.DishClearObstructionMapRequest): Promise<Device.Dish.DishClearObstructionMapResponse> {
+  async clearObstructionMap(
+    request?: Device.Dish.DishClearObstructionMapRequest
+  ): Promise<Device.Dish.DishClearObstructionMapResponse> {
     this.debug('Clearing obstruction map', request);
     const req = create(RequestSchema, {
       id: 0n,
       epochId: 0n,
       targetId: '',
-      request: { case: 'dishClearObstructionMap', value: create(DishClearObstructionMapRequestSchema, request) },
+      request: {
+        case: 'dishClearObstructionMap',
+        value: create(DishClearObstructionMapRequestSchema, request),
+      },
     });
     const response = await this.grpcClient.handle(req);
     if (response.response.case === 'dishClearObstructionMap') {
@@ -167,7 +179,9 @@ export class DishService extends BaseService {
    * console.log('EMC settings:', emc);
    * ```
    */
-  async getEmc(request?: Device.Device.DishGetEmcRequest): Promise<Device.Device.DishGetEmcResponse> {
+  async getEmc(
+    request?: Device.Device.DishGetEmcRequest
+  ): Promise<Device.Device.DishGetEmcResponse> {
     this.debug('Getting EMC settings', request);
     const req = create(RequestSchema, {
       id: 0n,
@@ -190,7 +204,9 @@ export class DishService extends BaseService {
    * await client.dish.setEmc({ theta: 45.0, phi: 90.0 });
    * ```
    */
-  async setEmc(request: Device.Device.DishSetEmcRequest): Promise<Device.Device.DishSetEmcResponse> {
+  async setEmc(
+    request: Device.Device.DishSetEmcRequest
+  ): Promise<Device.Device.DishSetEmcResponse> {
     this.debug('Setting EMC settings', request);
     const req = create(RequestSchema, {
       id: 0n,
@@ -214,7 +230,9 @@ export class DishService extends BaseService {
    * console.log('Config:', config);
    * ```
    */
-  async getConfig(request?: Device.Dish.DishGetConfigRequest): Promise<Device.Dish.DishGetConfigResponse> {
+  async getConfig(
+    request?: Device.Dish.DishGetConfigRequest
+  ): Promise<Device.Dish.DishGetConfigResponse> {
     this.debug('Getting dish config', request);
     const req = create(RequestSchema, {
       id: 0n,
@@ -237,7 +255,9 @@ export class DishService extends BaseService {
    * await client.dish.setConfig({ config: {...} });
    * ```
    */
-  async setConfig(request: Device.Dish.DishSetConfigRequest): Promise<Device.Dish.DishSetConfigResponse> {
+  async setConfig(
+    request: Device.Dish.DishSetConfigRequest
+  ): Promise<Device.Dish.DishSetConfigResponse> {
     this.debug('Setting dish config', request);
     const req = create(RequestSchema, {
       id: 0n,
@@ -284,13 +304,18 @@ export class DishService extends BaseService {
    * console.log('Scan success:', result.success);
    * ```
    */
-  async activateRssiScan(request: Device.Dish.DishActivateRssiScanRequest): Promise<Device.Dish.DishActivateRssiScanResponse> {
+  async activateRssiScan(
+    request: Device.Dish.DishActivateRssiScanRequest
+  ): Promise<Device.Dish.DishActivateRssiScanResponse> {
     this.debug('Activating RSSI scan', request);
     const req = create(RequestSchema, {
       id: 0n,
       epochId: 0n,
       targetId: '',
-      request: { case: 'dishActivateRssiScan', value: create(DishActivateRssiScanRequestSchema, request) },
+      request: {
+        case: 'dishActivateRssiScan',
+        value: create(DishActivateRssiScanRequestSchema, request),
+      },
     });
     const response = await this.grpcClient.handle(req);
     if (response.response.case === 'dishActivateRssiScan') {
@@ -308,13 +333,18 @@ export class DishService extends BaseService {
    * console.log('Results:', results);
    * ```
    */
-  async getRssiScanResult(request?: Device.Dish.DishGetRssiScanResultRequest): Promise<Device.Dish.DishGetRssiScanResultResponse> {
+  async getRssiScanResult(
+    request?: Device.Dish.DishGetRssiScanResultRequest
+  ): Promise<Device.Dish.DishGetRssiScanResultResponse> {
     this.debug('Getting RSSI scan results', request);
     const req = create(RequestSchema, {
       id: 0n,
       epochId: 0n,
       targetId: '',
-      request: { case: 'dishGetRssiScanResult', value: create(DishGetRssiScanResultRequestSchema, request) },
+      request: {
+        case: 'dishGetRssiScanResult',
+        value: create(DishGetRssiScanResultRequestSchema, request),
+      },
     });
     const response = await this.grpcClient.handle(req);
     if (response.response.case === 'dishGetRssiScanResult') {

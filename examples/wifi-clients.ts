@@ -50,4 +50,3 @@ async function monitorWifiClients() {
 
 // Run the example
 monitorWifiClients();
-
